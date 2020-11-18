@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "my-webcomic-site"
+    }
+  },
+  "defaultProject": "my-webcomic-site",
+  "cli": {
+    "analytics": false
+  }
 }

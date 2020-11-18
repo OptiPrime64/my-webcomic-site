@@ -1,0 +1,10 @@
+.comic-post{
+text-align: center;
+}
+
+.comic {
+  width: 600px;
+  height: 400px;
+  background-color: blue;
+  margin: auto;
+}
