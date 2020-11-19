@@ -18,6 +18,8 @@ export class AdminComponent implements OnInit {
     this.form = new FormGroup({
       title: new FormControl(null, { validators: [Validators.required, Validators.minLength(3)]
       }),
+      issue: new FormControl(null, { validators: [Validators.required]
+      }),
       about: new FormControl(null, { validators: [Validators.required] }),
     });
   }
@@ -28,10 +30,12 @@ export class AdminComponent implements OnInit {
     }
     const tempPost: Comicpost = {
       title: this.form.value.title,
+      issue: this.form.value.issue,
       about: this.form.value.about
     };
     // console.log(tempPost);
     this.postService.addPost(tempPost)
+    this.form.reset();
   }
 
 }

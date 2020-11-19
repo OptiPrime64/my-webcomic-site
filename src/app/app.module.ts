@@ -7,13 +7,15 @@ import { HeaderComponent } from './header/header.component';
 import { AdminComponent } from './admin/admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { ArchiveComponent } from './archive/archive.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComicComponent,
     HeaderComponent,
-    AdminComponent
+    AdminComponent,
+    ArchiveComponent
   ],
   imports: [
     BrowserModule,

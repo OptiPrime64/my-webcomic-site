@@ -1,13 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AdminComponent } from './admin/admin.component';
-import { AppComponent } from './app.component';
+import { ArchiveComponent } from './archive/archive.component';
 import { MainComicComponent } from './main-comic/main-comic.component';
 
 
 const routes: Routes = [
   { path: 'homepage', component: MainComicComponent},
   { path: "admin", component: AdminComponent},
+  { path: "archive", component: ArchiveComponent},
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 
 ];

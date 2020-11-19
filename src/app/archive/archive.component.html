@@ -1,0 +1,6 @@
+<div class="container comic-post">
+  <div *ngFor="let post of posts; let i = index">
+    <h1>Issue #{{ post.issue }}: {{ post.title }}</h1>
+    <p>{{ post.about }}</p>
+  </div>
+</div>

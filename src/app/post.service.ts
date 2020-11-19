@@ -8,7 +8,7 @@ import { Comicpost } from './comicpost.model';
 export class PostService {
 
   posts: Comicpost[] = [];
-  postUpdated = new Subject<Comicpost>();
+  postsUpdated = new Subject<Comicpost[]>();
 
 
   constructor() { }
@@ -16,18 +16,20 @@ export class PostService {
   addPost(tempPost: Comicpost) {
     const newPost = {
       title: tempPost.title,
+      issue: tempPost.issue,
       about: tempPost.about
     }
     this.posts.push(newPost);
+    this.posts.sort((a, b) => {
+      return a.issue - b.issue
+    });
     const copiedPosts: Comicpost[] = [...this.posts];
-    this.postUpdated.next(copiedPosts[copiedPosts.length -1])
+    this.postsUpdated.next(copiedPosts);
 
   }
 
-  getPost() {
-    const allPosts = [...this.posts]
-    const newPost = allPosts[allPosts.length - 1];
-    return newPost;
+  getPosts() {
+    return [...this.posts];
   }
 
   // getpostsUpdatedListener() {
