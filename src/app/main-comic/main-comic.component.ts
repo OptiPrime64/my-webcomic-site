@@ -18,19 +18,13 @@ export class MainComicComponent implements OnInit, OnDestroy {
   constructor(private postService: PostService) { }
 
   ngOnInit() {
-    const newPosts: Comicpost[] = this.postService.getPosts();
-    const newPost: Comicpost = newPosts[newPosts.length - 1];
-    if (newPost) {
-      console.log(newPost.title);
-      this.comicTitle = newPost.title;
-      this.comicIssue = newPost.issue;
-      this.comicAbout = newPost.about;
-    }
+    this.postService.getPosts();
+
     this.postsSub = this.postService.postsUpdated.subscribe((subPosts) => {
       const subPost: Comicpost = subPosts[subPosts.length - 1];
       console.log(subPost.title);
       this.comicTitle = subPost.title;
-      this.comicIssue = newPost.issue;
+      this.comicIssue = subPost.issue;
       this.comicAbout = subPost.about;
     })
   }

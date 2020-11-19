@@ -16,11 +16,10 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   constructor(private postsService: PostService) { }
 
   ngOnInit() {
-    this.posts = this.postsService.getPosts();
+    this.postsService.getPosts();
     this.postsSub = this.postsService.postsUpdated.subscribe(newPosts => {
       this.posts = newPosts;
     })
-    console.log(this.posts);
   }
 
   ngOnDestroy() {
