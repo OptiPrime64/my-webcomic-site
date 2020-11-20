@@ -10,9 +10,11 @@ import { PostService } from '../post.service';
 })
 export class MainComicComponent implements OnInit, OnDestroy {
 
-  comicTitle: string = 'Default';
-  comicIssue: number = 0;
-  comicAbout: string = 'This is the latest comic I\'ve done';
+  comicPosts: Comicpost[];
+  comicTitle: string;
+  comicIssue: number;
+  comicAbout: string;
+  currentPage: number;
   private postsSub: Subscription;
 
   constructor(private postService: PostService) { }
@@ -21,12 +23,37 @@ export class MainComicComponent implements OnInit, OnDestroy {
     this.postService.getPosts();
 
     this.postsSub = this.postService.postsUpdated.subscribe((subPosts) => {
-      const subPost: Comicpost = subPosts[subPosts.length - 1];
-      console.log(subPost.title);
-      this.comicTitle = subPost.title;
-      this.comicIssue = subPost.issue;
-      this.comicAbout = subPost.about;
+      this.comicPosts = subPosts;
+      this.currentPage = subPosts.length - 1;
+      const currentPost: Comicpost = subPosts[this.currentPage];
+      this.comicTitle = currentPost.title;
+      this.comicIssue = currentPost.issue;
+      this.comicAbout = currentPost.about;
     })
+  }
+
+  previousComic() {
+    if (this.currentPage > 0) {
+      this.currentPage -= 1;
+      const currentPost: Comicpost = this.comicPosts[this.currentPage];
+      this.comicTitle = currentPost.title;
+      this.comicIssue = currentPost.issue;
+      this.comicAbout = currentPost.about;
+    } else {
+      return;
+    }
+  }
+
+  nextComic() {
+    if (this.currentPage < this.comicPosts.length -1) {
+      this.currentPage += 1;
+      const currentPost: Comicpost = this.comicPosts[this.currentPage];
+      this.comicTitle = currentPost.title;
+      this.comicIssue = currentPost.issue;
+      this.comicAbout = currentPost.about;
+    } else {
+      return;
+    }
   }
 
   ngOnDestroy() {

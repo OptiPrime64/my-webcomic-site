@@ -3,3 +3,6 @@
   <h3>Issue # {{comicIssue}}: {{comicTitle}}</h3>
   <p>{{ comicAbout }}</p>
 </div>
+
+<button [ngClass]="{'disabled': currentPage === 0}" (click)="previousComic()">Previous</button>
+<button [ngClass]="{'disabled': currentPage === comicPosts.length-1}" (click)="nextComic()">Next</button>

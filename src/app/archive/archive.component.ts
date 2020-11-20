@@ -10,6 +10,7 @@ import { PostService } from '../post.service';
 })
 export class ArchiveComponent implements OnInit, OnDestroy {
 
+  authUser = true;
   posts: Comicpost[] = [];
   private postsSub: Subscription;
 
@@ -20,6 +21,10 @@ export class ArchiveComponent implements OnInit, OnDestroy {
     this.postsSub = this.postsService.postsUpdated.subscribe(newPosts => {
       this.posts = newPosts;
     })
+  }
+
+  onDelete(postId: string) {
+    this.postsService.deletePost(postId);
   }
 
   ngOnDestroy() {

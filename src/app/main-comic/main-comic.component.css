@@ -8,3 +8,7 @@ text-align: center;
   background-color: blue;
   margin: auto;
 }
+
+.disabled {
+  opacity: 0.5;
+}

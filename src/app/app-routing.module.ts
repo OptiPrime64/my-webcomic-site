@@ -8,6 +8,7 @@ import { MainComicComponent } from './main-comic/main-comic.component';
 const routes: Routes = [
   { path: 'homepage', component: MainComicComponent},
   { path: "admin", component: AdminComponent},
+  { path: "edit/:postId", component: AdminComponent},
   { path: "archive", component: ArchiveComponent},
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
 
