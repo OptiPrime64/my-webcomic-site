@@ -1,5 +1,8 @@
 <div class="container comic-post">
-  <div class="comic"></div>
+  <!-- <div class="comic"></div> -->
+  <div class="post-image">
+    <img [src]="comicImage" [alt]="comicTitle">
+  </div>
   <h3>Issue # {{comicIssue}}: {{comicTitle}}</h3>
   <p>{{ comicAbout }}</p>
 </div>

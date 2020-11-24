@@ -10,10 +10,11 @@ import { PostService } from '../post.service';
 })
 export class MainComicComponent implements OnInit, OnDestroy {
 
-  comicPosts: Comicpost[];
+  comicPosts: Comicpost[] = [];
   comicTitle: string;
   comicIssue: number;
   comicAbout: string;
+  comicImage: string;
   currentPage: number;
   private postsSub: Subscription;
 
@@ -22,13 +23,15 @@ export class MainComicComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.postService.getPosts();
 
-    this.postsSub = this.postService.postsUpdated.subscribe((subPosts) => {
-      this.comicPosts = subPosts;
-      this.currentPage = subPosts.length - 1;
-      const currentPost: Comicpost = subPosts[this.currentPage];
+    this.postsSub = this.postService.postsUpdated.subscribe((newPosts) => {
+      this.comicPosts = newPosts;
+      this.currentPage = newPosts.length - 1;
+      console.log(this.currentPage);
+      const currentPost: Comicpost = newPosts[this.currentPage];
       this.comicTitle = currentPost.title;
       this.comicIssue = currentPost.issue;
       this.comicAbout = currentPost.about;
+      this.comicImage = currentPost.imagePath;
     })
   }
 
@@ -39,6 +42,7 @@ export class MainComicComponent implements OnInit, OnDestroy {
       this.comicTitle = currentPost.title;
       this.comicIssue = currentPost.issue;
       this.comicAbout = currentPost.about;
+      this.comicImage = currentPost.imagePath;
     } else {
       return;
     }
@@ -51,6 +55,7 @@ export class MainComicComponent implements OnInit, OnDestroy {
       this.comicTitle = currentPost.title;
       this.comicIssue = currentPost.issue;
       this.comicAbout = currentPost.about;
+      this.comicImage = currentPost.imagePath;
     } else {
       return;
     }

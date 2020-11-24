@@ -17,8 +17,14 @@ export class PostService {
     private router: Router) { }
 
   addPost(clientPost: Comicpost) {
+    const comicpostData = new FormData();
+    const numToString = clientPost.issue.toString();
+    comicpostData.append("title", clientPost.title);
+    comicpostData.append("issue", numToString);
+    comicpostData.append("about", clientPost.about);
+    comicpostData.append("image", clientPost.imagePath);
 
-    this.http.post<{ comicpost: Comicpost }>('http://localhost:3000/api/posts', clientPost)
+    this.http.post<{ message: string }>('http://localhost:3000/api/posts', comicpostData)
       .subscribe(() => {
         this.router.navigate(['/']);
       });
@@ -29,6 +35,7 @@ export class PostService {
       .subscribe(
         (transformedPostData) => {
           this.posts = transformedPostData.comicposts;
+
           this.posts.sort((a, b) => {
             return a.issue - b.issue
           });
@@ -44,7 +51,6 @@ export class PostService {
   updatePost(updatedPost: Comicpost) {
     this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + updatedPost._id, updatedPost)
       .subscribe(message => {
-        console.log(message);
         this.getPosts();
         this.router.navigate(['/archive']);
       })

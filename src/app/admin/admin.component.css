@@ -1,3 +1,7 @@
 .mode {
   color: red;
 }
+
+input[type="file"] {
+  visibility: hidden;
+}

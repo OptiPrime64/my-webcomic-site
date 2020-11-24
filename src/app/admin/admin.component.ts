@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Comicpost } from '../comicpost.model';
 import { PostService } from '../post.service';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-admin',
@@ -14,6 +15,7 @@ export class AdminComponent implements OnInit {
   form: FormGroup;
   postId: string;
   mode: string = 'create';
+  imagePreview: string;
 
   constructor(private postService: PostService,
     private route: ActivatedRoute) { }
@@ -27,6 +29,10 @@ export class AdminComponent implements OnInit {
         validators: [Validators.required]
       }),
       about: new FormControl(null, { validators: [Validators.required] }),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
+      })
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -59,7 +65,8 @@ export class AdminComponent implements OnInit {
       const tempPost: Comicpost = {
         title: this.form.value.title,
         issue: this.form.value.issue,
-        about: this.form.value.about
+        about: this.form.value.about,
+        imagePath: this.form.value.image
       };
       this.postService.addPost(tempPost);
     } else {
@@ -67,11 +74,23 @@ export class AdminComponent implements OnInit {
         _id: this.postId,
         title: this.form.value.title,
         issue: this.form.value.issue,
-        about: this.form.value.about
+        about: this.form.value.about,
+        imagePath: this.form.value.image
       };
       this.postService.updatePost(tempPost);
     }
     this.form.reset();
+  }
+
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ image: file });
+    this.form.get("image").updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
 }
