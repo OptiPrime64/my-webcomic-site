@@ -26,7 +26,6 @@ const storage = multer.diskStorage({
       .split(" ")
       .join("-");
     const ext = MIME_TYPE_MAP[file.mimetype];
-    console.log(name);
     cb(null, name + "-" + Date.now() + "." + ext);
   }
 });
@@ -47,11 +46,11 @@ router.post('', multer({ storage: storage }).single("image"), (req, res, next) =
     res.status(201).json({
       message: "Comic posted successfully!"
       // {
-        // title: createdComicpost.title,
-        // issue: createdComicpost.issue,
-        // about: createdComicpost.about
-        // ...createdComicpost,
-        // id: createdComicpost._id
+      // title: createdComicpost.title,
+      // issue: createdComicpost.issue,
+      // about: createdComicpost.about
+      // ...createdComicpost,
+      // id: createdComicpost._id
       // }
     });
   }).catch(error => {
@@ -63,7 +62,6 @@ router.post('', multer({ storage: storage }).single("image"), (req, res, next) =
 
 router.get('', (req, res, next) => {
   Comicpost.find().then(fetchedComicposts => {
-    console.log(fetchedComicposts);
     res.status(200).json({
       message: 'Posts fetched successfully!',
       comicposts: fetchedComicposts
@@ -77,31 +75,34 @@ router.get('', (req, res, next) => {
 
 });
 
-router.get('/:id', (req, res, next)=>{
+router.get('/:id', (req, res, next) => {
   Comicpost.findById(req.params.id).then(comicpost => {
-    if (comicpost){
+    if (comicpost) {
       res.status(200).json(comicpost);
-    }else{
-      res.status(404).json({message: 'Post not found!'})
+    } else {
+      res.status(404).json({ message: 'Post not found!' })
     }
   })
-  .catch(error => {
-    res.status(500).json({
-      message: "Fetching post failed!"
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching post failed!"
+      });
     });
-  });
 })
 
-router.put('/:id', (req, res, next) => {
-
+router.put('/:id', multer({ storage: storage }).single("image"), (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if (req.file){
+    const url = req.protocol + "://" + req.get("host");
+    imagePath = url + "/images/" + req.file.filename;
+  }
   const comicpost = new Comicpost({
     _id: req.body._id,
     title: req.body.title,
     issue: req.body.issue,
-    about: req.body.about
+    about: req.body.about,
+    imagePath: imagePath
   });
-  console.log('HERE2!');
-  console.log(comicpost);
   Comicpost.updateOne({
     _id: req.params.id
   }, comicpost).then(() => {
@@ -109,6 +110,7 @@ router.put('/:id', (req, res, next) => {
       message: 'Update successful!'
     })
   }).catch(error => {
+    console.log(error)
     res.status(500).json({
       message: 'Could not update post!'
     });
@@ -122,7 +124,6 @@ router.delete('/:id', (req, res, next) => {
     res.status(200).json({
       message: "Deletion successful!"
     });
-    console.log(result);
   });
 });
 

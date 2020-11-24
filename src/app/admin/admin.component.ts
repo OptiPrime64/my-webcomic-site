@@ -36,7 +36,6 @@ export class AdminComponent implements OnInit {
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      console.log(paramMap);
       if (paramMap.has('postId')) {
         console.log('Edit mode')
         this.mode = 'edit';
@@ -46,8 +45,10 @@ export class AdminComponent implements OnInit {
             this.form.setValue({
               title: postData.title,
               issue: postData.issue,
-              about: postData.about
+              about: postData.about,
+              image: postData.imagePath
             });
+            this.imagePreview = postData.imagePath;
           });
       } else {
         console.log('Create mode')
@@ -70,14 +71,13 @@ export class AdminComponent implements OnInit {
       };
       this.postService.addPost(tempPost);
     } else {
-      const tempPost: Comicpost = {
-        _id: this.postId,
-        title: this.form.value.title,
-        issue: this.form.value.issue,
-        about: this.form.value.about,
-        imagePath: this.form.value.image
-      };
-      this.postService.updatePost(tempPost);
+      this.postService.updatePost(
+        this.postId,
+        this.form.value.title,
+        this.form.value.issue,
+        this.form.value.about,
+        this.form.value.image
+      );
     }
     this.form.reset();
   }

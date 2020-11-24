@@ -26,7 +26,6 @@ export class MainComicComponent implements OnInit, OnDestroy {
     this.postsSub = this.postService.postsUpdated.subscribe((newPosts) => {
       this.comicPosts = newPosts;
       this.currentPage = newPosts.length - 1;
-      console.log(this.currentPage);
       const currentPost: Comicpost = newPosts[this.currentPage];
       this.comicTitle = currentPost.title;
       this.comicIssue = currentPost.issue;

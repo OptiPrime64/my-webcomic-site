@@ -27,3 +27,12 @@
     align-self: center;
     margin: 0 0 8px 8px;
   }
+
+  .post-image {
+    width: 500px;
+    margin: auto;
+  }
+
+  .post-image img {
+    width: 100%
+  }

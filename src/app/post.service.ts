@@ -22,7 +22,7 @@ export class PostService {
     comicpostData.append("title", clientPost.title);
     comicpostData.append("issue", numToString);
     comicpostData.append("about", clientPost.about);
-    comicpostData.append("image", clientPost.imagePath);
+    comicpostData.append("image", clientPost.imagePath, clientPost.title);
 
     this.http.post<{ message: string }>('http://localhost:3000/api/posts', comicpostData)
       .subscribe(() => {
@@ -48,12 +48,37 @@ export class PostService {
     return this.http.get<Comicpost>('http://localhost:3000/api/posts/' + postId);
   }
 
-  updatePost(updatedPost: Comicpost) {
-    this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + updatedPost._id, updatedPost)
-      .subscribe(message => {
+  updatePost(id: string, title: string, issue: number, about: string, image: File | string) {
+    let comicpostData: Comicpost | FormData;
+    if (typeof image === "object") {
+      const numToString = issue.toString();
+      comicpostData = new FormData();
+      comicpostData.append("_id", id);
+      comicpostData.append("title", title);
+      comicpostData.append("issue", numToString);
+      comicpostData.append("about", about);
+      comicpostData.append("image", image, title);
+    } else {
+      comicpostData = {
+        _id: id,
+        title: title,
+        imagePath: image,
+        about: about,
+        issue: issue
+      };
+    };
+
+    this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, comicpostData)
+      .subscribe(response => {
+        console.log(response.message);
         this.getPosts();
-        this.router.navigate(['/archive']);
-      })
+        this.router.navigate(['/']);
+      });
+    // this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + updatedPost._id, updatedPost)
+    //   .subscribe(message => {
+    //     this.getPosts();
+    //     this.router.navigate(['/archive']);
+    //   });
   }
 
   deletePost(postId: string) {
