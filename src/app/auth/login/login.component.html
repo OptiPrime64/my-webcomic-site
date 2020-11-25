@@ -1,0 +1,27 @@
+<div class="container">
+
+  <form (submit)="onSubmit(loginForm)" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" class="form-control" id="email" ngModel name="email" #emailInput="ngModel"
+        aria-describedby="emailHelp" required email>
+      <small *ngIf="emailInput.invalid && emailInput.touched" id="emailHelp" class="form-text">Please enter a valid
+        email.</small>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" ngModel name="password" #passwordInput="ngModel"
+        required>
+      <small *ngIf="passwordInput.invalid && passwordInput.touched" id="emailHelp" class="form-text">Please enter a
+        password.</small>
+    </div>
+    <button type="submit" class="btn btn-success"
+      [disabled]="!loginForm.valid">{{ isLoginMode ? 'Login' : 'Sign Up' }}</button>
+    <button class="btn btn-primary" type="button" (click)="onSwitchMode()">Switch to
+      {{ isLoginMode ? 'Sign Up' : 'Login' }}</button>
+
+  </form>
+
+
+
+</div>

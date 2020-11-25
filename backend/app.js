@@ -3,7 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');//NEED npm install
 const mongoose = require('mongoose');// NEED npm install
 
-const comicpostsRoutes = require("./routes/comicposts")
+const comicpostsRoutes = require("./routes/comicposts");
+const userRoutes = require("./routes/user");
 
 const app = express(); //NEED npm install
 
@@ -37,5 +38,6 @@ app.use((req, res, next) => {
 // });
 
 app.use("/api/posts", comicpostsRoutes);
+app.use("/api/user", userRoutes);
 
 module.exports = app;
