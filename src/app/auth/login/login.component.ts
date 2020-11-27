@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
     }
     if (this.isLoginMode === true){
       console.log("Login mode");
+      const authData: AuthData = {email: form.value.email, password: form.value.password};
+      this.authService.loginUser(authData);
     }else{
       console.log('Signin mode');
       const authData: AuthData = {email: form.value.email, password: form.value.password};
@@ -28,6 +30,10 @@ export class LoginComponent implements OnInit {
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  onLogout(){
+    this.authService.logout();
   }
 
   ngOnInit(): void {

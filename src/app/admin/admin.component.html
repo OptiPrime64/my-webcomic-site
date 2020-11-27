@@ -23,7 +23,8 @@
       <textarea class="form-control" formControlName="about" id="about" rows="4"></textarea>
       <p>{{postId}}</p>
     </div>
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button [disabled]="!isAuthenticated" type="submit" class="btn btn-success">Submit</button>
   </form>
   <p class="mode">{{mode}} mode </p>
+  <p class="mode">{{ isAuthenticated ? 'Admin' : 'Guest' }}</p>
 </div>

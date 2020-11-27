@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { Comicpost } from '../comicpost.model';
 import { PostService } from '../post.service';
 import { mimeType } from './mime-type.validator';
@@ -10,15 +12,18 @@ import { mimeType } from './mime-type.validator';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   postId: string;
   mode: string = 'create';
   imagePreview: string;
+  isAuthenticated: boolean = false;
+  authSub: Subscription;
 
   constructor(private postService: PostService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -56,13 +61,18 @@ export class AdminComponent implements OnInit {
         this.postId = null;
       }
     })
+
+    this.isAuthenticated = this.authService.isAuthenticated;
+    this.authSub = this.authService.isAuthenticatedOb.subscribe(authState => {
+      this.isAuthenticated = authState;
+    })
   }
 
   onSavePost() {
     if (this.form.invalid) {
       return;
     }
-    if (this.mode === 'create'){
+    if (this.mode === 'create') {
       const tempPost: Comicpost = {
         title: this.form.value.title,
         issue: this.form.value.issue,
@@ -91,6 +101,10 @@ export class AdminComponent implements OnInit {
       this.imagePreview = reader.result as string;
     };
     reader.readAsDataURL(file);
+  }
+
+  ngOnDestroy() {
+    this.authSub.unsubscribe();
   }
 
 }
