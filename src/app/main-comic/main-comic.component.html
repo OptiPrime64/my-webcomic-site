@@ -1,11 +1,15 @@
 <div class="container comic-post">
   <!-- <div class="comic"></div> -->
+  <h1>Issue # {{comicIssue}}: {{comicTitle}}</h1>
   <div class="post-image">
     <img [src]="comicImage" [alt]="comicTitle">
   </div>
-  <h3>Issue # {{comicIssue}}: {{comicTitle}}</h3>
-  <p>{{ comicAbout }}</p>
+
+  <pre>{{ comicAbout }}</pre>
 </div>
 
-<button [ngClass]="{'disabled': currentPage === 0}" (click)="previousComic()">Previous</button>
+<div class="navigation">
+  <button [ngClass]="{'disabled': currentPage === 0}" (click)="previousComic()">Previous</button>
+  <button routerLink="/archive">Archive</button>
 <button [ngClass]="{'disabled': currentPage === comicPosts.length-1}" (click)="nextComic()">Next</button>
+</div>

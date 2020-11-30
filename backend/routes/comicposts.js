@@ -6,8 +6,6 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-
-
 const MIME_TYPE_MAP = {
   "image/png": "png",
   "image/jpeg": "jpg",
@@ -42,20 +40,9 @@ router.post('', checkAuth, multer({ storage: storage }).single("image"), (req, r
     about: req.body.about,
     imagePath: url + "/images/" + req.file.filename
   });
-  // console.log(comicposts);
-  // res.status(201).json({
-  //   message: 'Post created successfully!'
-  // })
   comicposts.save().then(createdComicpost => {
     res.status(201).json({
       message: "Comic posted successfully!"
-      // {
-      // title: createdComicpost.title,
-      // issue: createdComicpost.issue,
-      // about: createdComicpost.about
-      // ...createdComicpost,
-      // id: createdComicpost._id
-      // }
     });
   }).catch(error => {
     res.status(500).json({
@@ -121,7 +108,7 @@ router.put('/:id', checkAuth, multer({ storage: storage }).single("image"), (req
   });
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkAuth, (req, res, next) => {
   Comicpost.deleteOne({
     _id: req.params.id
   }).then(result => {
