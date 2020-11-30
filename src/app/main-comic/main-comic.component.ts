@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Comicpost } from '../comicpost.model';
 import { PostService } from '../post.service';
@@ -18,20 +19,35 @@ export class MainComicComponent implements OnInit, OnDestroy {
   currentPage: number;
   private postsSub: Subscription;
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.postService.getPosts();
 
     this.postsSub = this.postService.postsUpdated.subscribe((newPosts) => {
-      this.comicPosts = newPosts;
-      this.currentPage = newPosts.length - 1;
-      const currentPost: Comicpost = newPosts[this.currentPage];
-      this.comicTitle = currentPost.title;
-      this.comicIssue = currentPost.issue;
-      this.comicAbout = currentPost.about;
-      this.comicImage = currentPost.imagePath;
-    })
+      this.route.paramMap.subscribe((paramMap) => {
+        const issueNumber = (paramMap.get("issue"));
+        if (issueNumber) {
+          this.comicPosts = newPosts;
+          this.currentPage = +issueNumber-1;
+          const currentPost: Comicpost = newPosts[this.currentPage];
+          this.comicTitle = currentPost.title;
+          this.comicIssue = currentPost.issue;
+          this.comicAbout = currentPost.about;
+          this.comicImage = currentPost.imagePath;
+
+        } else {
+          this.comicPosts = newPosts;
+          this.currentPage = newPosts.length - 1;
+          const currentPost: Comicpost = newPosts[this.currentPage];
+          this.comicTitle = currentPost.title;
+          this.comicIssue = currentPost.issue;
+          this.comicAbout = currentPost.about;
+          this.comicImage = currentPost.imagePath;
+        }
+      });
+    });
   }
 
   previousComic() {
@@ -48,7 +64,7 @@ export class MainComicComponent implements OnInit, OnDestroy {
   }
 
   nextComic() {
-    if (this.currentPage < this.comicPosts.length -1) {
+    if (this.currentPage < this.comicPosts.length - 1) {
       this.currentPage += 1;
       const currentPost: Comicpost = this.comicPosts[this.currentPage];
       this.comicTitle = currentPost.title;

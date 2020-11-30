@@ -45,6 +45,10 @@ export class AuthService {
       })
   }
 
+  getToken() {
+    return this.token;
+  }
+
   setTokenTimer(duration: number) {
     console.log("Setting timer: " + duration);
     this.tokenTimer = setTimeout(() => {
@@ -52,9 +56,9 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  autoAuthUser(){
+  autoAuthUser() {
     const authInfo = this.getAuthData();
-    if (!authInfo){
+    if (!authInfo) {
       return;
     }
     const now = new Date();

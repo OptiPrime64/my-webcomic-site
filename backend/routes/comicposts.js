@@ -1,9 +1,12 @@
 const express = require("express");
 const multer = require("multer");
 
+const Comicpost = require('../models/comicpost');
+const checkAuth = require("../middleware/check-auth");
+
 const router = express.Router();
 
-const Comicpost = require('../models/comicpost');
+
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -30,7 +33,8 @@ const storage = multer.diskStorage({
   }
 });
 
-router.post('', multer({ storage: storage }).single("image"), (req, res, next) => {
+router.post('', checkAuth, multer({ storage: storage }).single("image"), (req, res, next) => {
+  console.log("Post clicked!")
   const url = req.protocol + "://" + req.get("host");
   const comicposts = new Comicpost({
     title: req.body.title,
@@ -90,7 +94,7 @@ router.get('/:id', (req, res, next) => {
     });
 })
 
-router.put('/:id', multer({ storage: storage }).single("image"), (req, res, next) => {
+router.put('/:id', checkAuth, multer({ storage: storage }).single("image"), (req, res, next) => {
   let imagePath = req.body.imagePath;
   if (req.file){
     const url = req.protocol + "://" + req.get("host");
