@@ -17,9 +17,9 @@
       <li *ngIf="isAuth" class="nav-item">
         <a class="nav-link" routerLink="/admin">Admin</a>
       </li>
-      <li *ngIf="!isAuth" class="nav-item">
+      <!-- <li *ngIf="!isAuth" class="nav-item">
         <a class="nav-link" routerLink="/login">Login</a>
-      </li>
+      </li> -->
       <li *ngIf="isAuth" class="nav-item">
         <a class="nav-link" (click)="onLogout()">Logout</a>
       </li>
