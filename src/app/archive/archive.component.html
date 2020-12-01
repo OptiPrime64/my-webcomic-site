@@ -1,12 +1,16 @@
 <div class="container comic-post">
   <div *ngFor="let post of posts; let i = index">
-    <a [routerLink]="['/homepage', post.issue]">Issue #{{ post.issue }}: {{ post.title }}</a>
-    <div class="post-image">
-      <img [src]="post.imagePath" [alt]="post.title">
-    </div>
+    <a [routerLink]="['/homepage', post.issue]">{{ post.title }}
+      <div class="post-image">
+        <img [src]="post.imagePath" [alt]="post.title">
+      </div>
+    </a>
+
+
     <div class="row justify-content-md-center" *ngIf="isAuth">
       <div class="admin-button"> <button class="edit-btn" [routerLink]="['/edit', post._id]">Edit</button></div>
-      <div class="admin-button"> <button class="delete-btn" (click)="onDelete(post._id)"><i class="fa fa-close"></i></button></div>
+      <div class="admin-button"> <button class="delete-btn" (click)="onDelete(post._id)"><i
+            class="fa fa-close"></i></button></div>
     </div>
 
   </div>

@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './admin/admin.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -10,6 +11,7 @@ import { MainComicComponent } from './main-comic/main-comic.component';
 const routes: Routes = [
   { path: 'homepage', component: MainComicComponent },
   { path: 'homepage/:issue', component: MainComicComponent },
+  { path: "about", component: AboutComponent },
   { path: "admin", component: AdminComponent, canActivate: [AuthGuard] },
   { path: "edit/:postId", component: AdminComponent, canActivate: [AuthGuard] },
   { path: "archive", component: ArchiveComponent },

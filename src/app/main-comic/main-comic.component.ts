@@ -30,7 +30,7 @@ export class MainComicComponent implements OnInit, OnDestroy {
         const issueNumber = (paramMap.get("issue"));
         if (issueNumber) {
           this.comicPosts = newPosts;
-          this.currentPage = +issueNumber-1;
+          this.currentPage = +issueNumber - 1;
           const currentPost: Comicpost = newPosts[this.currentPage];
           this.comicTitle = currentPost.title;
           this.comicIssue = currentPost.issue;
@@ -48,6 +48,15 @@ export class MainComicComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  firstComic() {
+    this.currentPage = 0;
+    const currentPost: Comicpost = this.comicPosts[0];
+    this.comicTitle = currentPost.title;
+    this.comicIssue = currentPost.issue;
+    this.comicAbout = currentPost.about;
+    this.comicImage = currentPost.imagePath;
   }
 
   previousComic() {
@@ -74,6 +83,15 @@ export class MainComicComponent implements OnInit, OnDestroy {
     } else {
       return;
     }
+  }
+
+  lastComic(){
+    this.currentPage = this.comicPosts.length - 1
+    const currentPost: Comicpost = this.comicPosts[this.comicPosts.length - 1];
+      this.comicTitle = currentPost.title;
+      this.comicIssue = currentPost.issue;
+      this.comicAbout = currentPost.about;
+      this.comicImage = currentPost.imagePath;
   }
 
   ngOnDestroy() {

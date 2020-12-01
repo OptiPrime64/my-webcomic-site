@@ -1,6 +1,6 @@
 <div class="container comic-post">
   <!-- <div class="comic"></div> -->
-  <h1>Issue # {{comicIssue}}: {{comicTitle}}</h1>
+  <h1>{{comicTitle}}</h1>
   <div class="post-image">
     <img [src]="comicImage" [alt]="comicTitle">
   </div>
@@ -8,8 +8,21 @@
   <pre>{{ comicAbout }}</pre>
 </div>
 
-<div class="navigation">
-  <button [ngClass]="{'disabled': currentPage === 0}" (click)="previousComic()">Previous</button>
-  <button routerLink="/archive">Archive</button>
-<button [ngClass]="{'disabled': currentPage === comicPosts.length-1}" (click)="nextComic()">Next</button>
+<div class="navigation row justify-content-center align-items-center">
+
+  <div class="triangle-left-first" [ngClass]="{'disabled': currentPage === 0}"
+  (click)="firstComic()"></div>
+  <div class="triangle-left" [ngClass]="{'disabled': currentPage === 0}"
+  (click)="previousComic()"></div>
+  <button class="btn btn-primary prev" [ngClass]="{'disabled': currentPage === 0}"
+    (click)="previousComic()">Previous</button>
+  <button class="btn btn-primary" routerLink="/archive">Archive</button>
+  <button class="btn btn-primary next" [ngClass]="{'disabled': currentPage === comicPosts.length-1}"
+    (click)="nextComic()">Next</button>
+    <div class="triangle-right" [ngClass]="{'disabled': currentPage === comicPosts.length-1}"
+    (click)="nextComic()"></div>
+    <div class="triangle-right-last" [ngClass]="{'disabled': currentPage === comicPosts.length-1}"
+    (click)="lastComic()"></div>
+
 </div>
+

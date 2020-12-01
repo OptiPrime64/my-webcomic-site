@@ -11,6 +11,61 @@ font-size: 1rem;
 margin: 20px auto;
 }
 
+.triangle-left {
+	width: 0;
+	height: 0;
+	border-top: 25px solid transparent;
+	border-right: 15px solid #0B57A3;
+  border-bottom: 25px solid transparent;
+  margin: 0 -2px 0 4px;
+  cursor: pointer;
+}
+.triangle-left-first {
+	width: 0;
+	height: 0;
+	border-top: 25px solid transparent;
+	border-right: 10px solid #0B57A3;
+  border-bottom: 25px solid transparent;
+  margin: 0 -1px;
+  cursor: pointer;
+}
+.triangle-right {
+	width: 0;
+	height: 0;
+	border-top: 25px solid transparent;
+	border-left: 15px solid #0B57A3;
+  border-bottom: 25px solid transparent;
+  margin: 0 4px 0 -2px;
+  cursor: pointer;
+}
+.triangle-right-last {
+	width: 0;
+	height: 0;
+	border-top: 25px solid transparent;
+	border-left: 10px solid #0B57A3;
+  border-bottom: 25px solid transparent;
+  margin: 0 -1px;
+  cursor: pointer;
+}
+
+.btn-primary {
+background-color: #0B57A3;
+border-color: #0B57A3;
+margin: 0 2px;
+}
+
+.btn-primary:focus {
+  box-shadow: none;
+}
+
+.prev {
+  border-radius: 0 .25rem .25rem 0;
+  }
+
+.next {
+  border-radius: .25rem 0 0 .25rem;
+  }
+
 .comic-post{
 text-align: center;
 }
@@ -37,5 +92,5 @@ text-align: center;
 
 .navigation {
   text-align: center;
-  /* margin: auto; */
+  margin-bottom: 20px;
 }

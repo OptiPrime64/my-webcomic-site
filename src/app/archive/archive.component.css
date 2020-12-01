@@ -34,10 +34,14 @@ a {
 }
 
 .post-image {
-  width: 300px;
+  width: 100px;
   margin: auto;
 }
 
 .post-image img {
-  width: 100%
+  width: 100%;
 }
+
+
+a>.post-image { display: none; }
+a:hover>.post-image { display: block; }
