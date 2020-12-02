@@ -1,4 +1,4 @@
-const app = require("./backend/app");
+const app = require("./app");
 const debug = require("debug")("node-angular"); //DON'T need to npm install
 const http = require("http");
 
