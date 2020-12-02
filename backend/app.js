@@ -8,7 +8,7 @@ const userRoutes = require("./routes/user");
 
 const app = express(); //NEED npm install
 
-mongoose.connect('mongodb+srv://harold:ehc9HSAwaG28o8kI@cluster0.hzaam.mongodb.net/node-angular?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://harold:' + process.env.MONGO_ATLAS_PW + '@cluster0.hzaam.mongodb.net/node-angular?retryWrites=true&w=majority')
   .then(() => {
     console.log('Connected to database!')
   })

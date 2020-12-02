@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { environment } from '../environments/environment';
 import { Comicpost } from './comicpost.model';
+
+const BACKEND_URL = environment.apiUrl + "/posts"
 
 @Injectable({
   providedIn: 'root'
@@ -24,14 +27,14 @@ export class PostService {
     comicpostData.append("about", clientPost.about);
     comicpostData.append("image", clientPost.imagePath, clientPost.title);
 
-    this.http.post<{ message: string }>('http://localhost:3000/api/posts', comicpostData)
+    this.http.post<{ message: string }>(BACKEND_URL, comicpostData)
       .subscribe(() => {
         this.router.navigate(['/']);
       });
   }
 
   getPosts() {
-    this.http.get<{ message: string, comicposts: Comicpost[] }>('http://localhost:3000/api/posts')
+    this.http.get<{ message: string, comicposts: Comicpost[] }>(BACKEND_URL)
       .subscribe(
         (transformedPostData) => {
           this.posts = transformedPostData.comicposts;
@@ -45,7 +48,7 @@ export class PostService {
   }
 
   getPost(postId: string) {
-    return this.http.get<Comicpost>('http://localhost:3000/api/posts/' + postId);
+    return this.http.get<Comicpost>(BACKEND_URL + '/' + postId);
   }
 
   updatePost(id: string, title: string, issue: number, about: string, image: File | string) {
@@ -68,7 +71,7 @@ export class PostService {
       };
     };
 
-    this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + id, comicpostData)
+    this.http.put<{ message: string }>(BACKEND_URL + '/' + id, comicpostData)
       .subscribe(response => {
         console.log(response.message);
         this.getPosts();
@@ -82,7 +85,7 @@ export class PostService {
   }
 
   deletePost(postId: string) {
-    this.http.delete<{ message: string }>('http://localhost:3000/api/posts/' + postId)
+    this.http.delete<{ message: string }>(BACKEND_URL + '/' + postId)
       .subscribe(message => {
         this.getPosts();
       })
