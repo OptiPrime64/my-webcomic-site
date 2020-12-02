@@ -18,7 +18,6 @@ mongoose.connect('mongodb+srv://harold:' + process.env.MONGO_ATLAS_PW + '@cluste
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use("/images", express.static(path.join("backend/images")));
 app.use("/images", express.static(path.join("images")));
 
 app.get('/favicon.ico', (req, res) => res.status(204));
